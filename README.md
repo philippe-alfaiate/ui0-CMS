@@ -23,6 +23,14 @@ podman/~~docker~~ compose:
 - Backend -> Go 
     - Front generated and serve from back
 
+## Init Repo
+
+If you use podman, download before the docker images:
+```bash
+podman pull docker.io/postgres
+podman pull docker.io/adminer
+```
+
 ## Start
 
 ```bash
