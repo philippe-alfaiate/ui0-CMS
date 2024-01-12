@@ -1,0 +1,6 @@
+
+*.env
+!cfg.env
+
+admin-container/vendor
+admin-go
