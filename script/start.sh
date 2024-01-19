@@ -1,6 +1,4 @@
 #!/bin/bash
-if [ ! -d "./admin-container" ]; 
-    then echo "Please run this script from root folder of git project" 
-    exit 1 
-fi
-podman ps && podman-compose --env-file cfg.env -f podman-compose.yml up
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+podman ps && podman-compose --env-file ${SCRIPT_DIR}/../cfg.env.sh -f ${SCRIPT_DIR}/../podman-compose.yml up $1

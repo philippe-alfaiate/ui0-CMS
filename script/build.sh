@@ -1,15 +1,16 @@
 #!/bin/bash
-if [ ! -d "./admin-container" ]; 
-    then echo "Please run this script from root folder of git project" 
-    exit 1 
-fi
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+set -e
 
 # Build admin-go
-cd admin-container
-go mod tidy
+cd ${SCRIPT_DIR}/../admin-container
+go mod vendor
 export CGO_ENABLED=0
 export GOOS=linux
+[ ! -f admin-go ] || rm admin-go
 go build -o admin-go admin.go
 
 # Build container
+podman image rm --force admin-container:v1
 podman build -t admin-container:v1 .
