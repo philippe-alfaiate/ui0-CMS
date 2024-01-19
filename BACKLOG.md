@@ -4,3 +4,5 @@
 
 - [ ] health check on run container
 - [ ] health check on composer
+- [ ] Clean demo pg
+- [ ] Clean demo admin-container mutual ping
