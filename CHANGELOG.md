@@ -4,7 +4,8 @@
 
 - [ ] Verify if Model already here add it if not
 - [ ] Think about structure
-- [x] Refactor podman-compose without network bridge 
+- [x] Refactor podman-compose without network bridge
+- [x] Add diag image of structure in Readme
 
 ## 2024-01-19
 
