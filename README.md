@@ -15,6 +15,8 @@ Create at least 2 template for portfolio and blog (allow comment)
 - Plugin
     - TODO
 
+![diagram_structure](asset/diag.png)
+
 ## Structure
 
 podman/~~docker~~ compose:
