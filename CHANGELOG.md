@@ -1,11 +1,15 @@
 # Change Log
 
+## 2024-01-26
+
+- [ ] Verify if Model already here add it if not
+- [ ] Think about structure
+- [x] Refactor podman-compose without network bridge 
 
 ## 2024-01-19
 
 - [x] Go program "**Admin**" that ping DB
 - [x] Modele (empty new table) for DB
-- [ ] Verify if Model already here add it if not
 
 ## 2024-01-12
 

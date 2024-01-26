@@ -5,7 +5,6 @@ import (
 	"io"
 	"log"
 	"math/rand"
-	"net"
 	"net/http"
 	"os"
 	"strconv"
@@ -170,7 +169,7 @@ func checkLink(link *bool) {
 	source := rand.NewSource(time.Now().UnixNano())
 	random := rand.New(source)
 
-	if net.ParseIP(ip) == nil || err != nil || port_number > 65535 || port_number < 0 {
+	if err != nil || port_number > 65535 || port_number < 0 {
 		log.Fatalln("ADMIN_IP or ADMIN_PORT number are wrong or not set in ENV")
 	}
 

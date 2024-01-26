@@ -1,16 +1,8 @@
 version: '3.1'
 
-networks:
-  vpcbr:
-    driver: bridge
-    ipam:
-    config:
-      - subnet: 10.5.0.0/16
-        gateway: 10.5.0.1
-
 services:
 
-  db:
+  db-postgres:
     image: postgres
     restart: always
     volumes:
@@ -19,26 +11,20 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USER}
       PGDATA: /db
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.2
 
   admin-container1:
     image: localhost/admin-container:v1
     restart: always
     ports: 
       - 3001:3000
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.5
     environment:
-      ADMIN_LISTEN_HOST: 10.5.0.5:3000
-      ADMIN_IP: 10.5.0.6
+      ADMIN_LISTEN_HOST: :3000
+      ADMIN_IP: admin-container2
       ADMIN_PORT: 3000
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_USER: ${DB_USER}
-      DB_ADDR: "10.5.0.2:5432"
+      DB_ADDR: "db-postgres:5432"
       CONTAINER_NAME: admin-container1
 
   admin-container2:
@@ -50,12 +36,9 @@ services:
      admin-go"
     ports: 
       - 3002:3000
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.6
     environment:
-      ADMIN_LISTEN_HOST: 10.5.0.6:3000
-      ADMIN_IP: 10.5.0.5
+      ADMIN_LISTEN_HOST: :3000
+      ADMIN_IP:  admin-container1
       ADMIN_PORT: 3000
       CONTAINER_NAME: admin-container2
 
@@ -66,6 +49,3 @@ services:
     restart: always
     ports:
       - 8090:8080
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.3
