@@ -9,7 +9,7 @@ go mod vendor
 export CGO_ENABLED=0
 export GOOS=linux
 [ ! -f admin-go ] || rm admin-go
-go build -o admin-go admin.go
+go build -o admin-go *.go
 
 # Build container
 podman image rm --force admin-container:v1

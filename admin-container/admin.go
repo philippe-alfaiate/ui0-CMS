@@ -38,14 +38,40 @@ func (s Story) String() string {
 	return fmt.Sprintf("Story<%d %s %s>", s.Id, s.Title, s.Author)
 }
 
-func ExampleDB_Model(cfg pg.Options) {
+func createSchema(db *pg.DB) error {
+	models := []interface{}{
+		(*User)(nil),
+		(*Story)(nil),
+	}
+
+	for k, model := range models {
+		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
+			// Temp: true,
+			FKConstraints: true,
+		})
+		if err != nil {
+			if err.(pg.Error).Field('C') == "42P07" {
+				fmt.Println("Model", model, "exist already")
+			} else {
+				return err
+			}
+		} else {
+			fmt.Println("Schema", k, "created")
+		}
+	}
+	return nil
+}
+
+func ExampleDB_Model(cfg pg.Options) int {
 	db := pg.Connect(&cfg)
+	defer fmt.Println("DB closed by defer bob")
 	defer db.Close()
 
 	err := createSchema(db)
 	if err != nil {
 		panic(err)
 	}
+	// return 0
 
 	user1 := &User{
 		Name:   "admin",
@@ -103,25 +129,46 @@ func ExampleDB_Model(cfg pg.Options) {
 	// Output: User<1 admin [admin1@admin admin2@admin]>
 	// [User<1 admin [admin1@admin admin2@admin]> User<2 root [root1@root root2@root]>]
 	// Story<1 Cool story User<1 admin [admin1@admin admin2@admin]>>
+	return 0
 }
 
-// createSchema creates database schema for User and Story models.
-func createSchema(db *pg.DB) error {
+func initDB(cfg pg.Options) {
+	db := pg.Connect(&cfg)
+	defer db.Close()
+
+	err := initSchema(db)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func initSchema(db *pg.DB) error {
 	models := []interface{}{
-		(*User)(nil),
-		(*Story)(nil),
+		(*AdministrationUser)(nil),
+		(*AdministrationAuth)(nil),
+		// (*AdministrationSessionToken)(nil),
+		// (*AdministrationSession)(nil),
 	}
 
-	for _, model := range models {
+	for k, model := range models {
 		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
 			// Temp: true,
+			FKConstraints: true,
 		})
 		if err != nil {
-			return err
+			if err.(pg.Error).Field('C') == "42P07" {
+				fmt.Println("Model", model, "exist already")
+			} else {
+				return err
+			}
+		} else {
+			fmt.Println("Schema", k, "created")
 		}
 	}
 	return nil
 }
+
+// Mutual ping
 
 type PathMessage struct {
 	Path *string `json:"path"`
@@ -211,11 +258,14 @@ func getPgOption() (bool, pg.Options) {
 	return !missing, o
 }
 
+// MAIN
+
 func main() {
 	db_enable, db_cfg := getPgOption()
 	if db_enable {
 		log.Println("DB Data found", db_cfg)
-		ExampleDB_Model(db_cfg)
+		// ExampleDB_Model(db_cfg)
+		initDB(db_cfg)
 	} else {
 		log.Println("No DB data")
 	}
