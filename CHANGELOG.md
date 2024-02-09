@@ -1,9 +1,19 @@
 # Change Log
 
-## 2024-02-02
+## 2024-02-09
+- [ ] Create a raw demo website of the **UI0 - CMS project** as a OnePage
+- [ ] Think about how to create component/template out of it
+    - [ ] What parameters are needed and what can be tweak (allow user to change)
+    - [ ] How to unsure no conflict between component/template on CSS (moslty with standard naming)
+    - [ ] Add new task for this one
 
 - [ ] Verify if Model already here add it if not
 - [ ] Think about structure of the rest
+- [ ] Probably change to raw sql [~arbitrary decision] (ORM seems not easy enought and SQL link subtility is weird to add)
+- [x] Update this task list
+
+## 2024-02-02
+
 - [x] Think about structure of Login
 
 ## 2024-01-26
