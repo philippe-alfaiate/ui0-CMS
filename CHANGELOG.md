@@ -1,7 +1,12 @@
 # Change Log
 
-## 2024-02-09
-- [ ] Create a raw demo website of the **UI0 - CMS project** as a OnePage
+## 2024-02-23
+- [x] Started the raw demo website of the **UI0 - CMS project** as a OnePage
+    - [x] Add system (media@) theme to CSS
+    - [ ] Add between the last section and the footer a + button to edit the template (add new element bellow)
+        - Like at playground mode directly one the first page
+    - [ ] Remove ugly looking lorem ipsum 
+    - [ ] Continu ...
 - [ ] Think about how to create component/template out of it
     - [ ] What parameters are needed and what can be tweak (allow user to change)
     - [ ] How to unsure no conflict between component/template on CSS (moslty with standard naming)
@@ -10,6 +15,12 @@
 - [ ] Verify if Model already here add it if not
 - [ ] Think about structure of the rest
 - [ ] Probably change to raw sql [~arbitrary decision] (ORM seems not easy enought and SQL link subtility is weird to add)
+
+## 2024-02-16
+- [x] Take a nap to get more ideas
+
+## 2024-02-09
+
 - [x] Update this task list
 
 ## 2024-02-02
